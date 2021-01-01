@@ -1,8 +1,8 @@
 import { Center, Container, Text } from "@chakra-ui/react";
 
-export default function Index() {
+export default function Home() {
   return (
-    <Center>
+    <Center width="100%" borderBottom="1px solid #CCCCCC">
       <Container
         display="flex"
         maxWidth="800px"

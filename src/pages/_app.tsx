@@ -1,8 +1,10 @@
+import { Layout } from '@/modules/layout';
 import type { AppProps } from 'next/app';
-import '../index.css';
 
 export default function App({ Component, pageProps}: AppProps) {
   return (
-    <Component {...pageProps} />
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
   )
 };
