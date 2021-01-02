@@ -2,3 +2,4 @@
 node_modules
 .next
 src/wasm/build/*
+.DS_Store

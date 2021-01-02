@@ -1,10 +1,22 @@
 import { Flex } from "@chakra-ui/react";
 import { PropsWithChildren } from "react";
+import { Sidebar } from "./Sidebar";
 
-export function Layout({children}: PropsWithChildren<{}>) {
+type Props = {
+  sidebarItems: Array<string>
+}
+
+export function Layout({children, sidebarItems}: PropsWithChildren<Props>) {
   return (
-    <Flex as="main" fontFamily="Roboto">
-      {children}
+    <Flex>
+      <Sidebar items={sidebarItems} />
+      <Flex
+        as="main"
+        fontFamily="Roboto"
+        width="100%"
+      >
+        {children}
+      </Flex>
     </Flex>
   )
-}
+};
