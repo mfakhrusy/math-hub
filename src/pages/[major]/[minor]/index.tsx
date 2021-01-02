@@ -1,7 +1,7 @@
 import { getAllMajor, getAllMinorFromMajor, getSiblingLectures } from "@/engine/lectures/lectures";
 import { Layout } from "@/modules/layout";
 import { LectureURLQuery } from "@/types/lectures";
-import { GetStaticPaths, GetStaticPathsResult, GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 type Props = {
   siblingLectures: Array<string>
