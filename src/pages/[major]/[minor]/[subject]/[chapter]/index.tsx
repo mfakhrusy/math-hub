@@ -63,8 +63,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
   };
 
-  console.log(allChapterPath);
-
   return { paths: allChapterPath, fallback: false }
 };
 

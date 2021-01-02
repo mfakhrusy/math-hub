@@ -31,8 +31,8 @@ export function Sidebar({items}: Props) {
 
   return (
     <Flex
-      position="absolute"
-      width="300px"
+      // position="absolute"
+      minWidth="300px"
       backgroundColor="primary.100"
       height="100vh"
       flexDirection="column"

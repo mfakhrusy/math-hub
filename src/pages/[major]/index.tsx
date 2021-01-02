@@ -29,7 +29,6 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
   const query = context.params as LectureURLQuery;
 
   const siblingLectures = getSiblingLectures('major', query)
-  console.log(siblingLectures)
 
   return {
     props: {

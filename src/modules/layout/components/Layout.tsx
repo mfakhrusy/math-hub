@@ -13,7 +13,8 @@ export function Layout({children, sidebarItems}: PropsWithChildren<Props>) {
       <Flex
         as="main"
         fontFamily="Roboto"
-        width="100%"
+        flexGrow={1}
+        // width="100%"
       >
         {children}
       </Flex>
