@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { capitalize } from 'lodash';
 import { LectureURLQuery } from "@/types/lectures";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { getAllChapterFromSubject, getAllMajor, getAllMinorFromMajor, getAllSubjectFromMinor, getSiblingLectures } from "@/engine/lectures/lectures";
@@ -15,10 +14,6 @@ export default function ChapterPage({siblingLectures}: Props) {
   const { major, minor, subject, chapter } = router.query as LectureURLQuery;
   const Component = dynamic(
     () => import(`../../../../../lectures/${major}/${minor}/${subject}/${chapter}/${chapter}.tsx`)
-    .then((module) => {
-      const functionName = capitalize(chapter);
-      return module[`${functionName}`];
-    })
     .catch(() => {
       return () => <div> error </div>
     })
