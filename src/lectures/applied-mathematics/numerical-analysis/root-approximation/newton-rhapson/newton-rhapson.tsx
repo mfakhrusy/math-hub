@@ -1,14 +1,13 @@
 import { derivative } from 'mathjs';
 import dynamic from 'next/dynamic';
-import ReactMarkdown from 'react-markdown';
-import { MDHeadingRenderer } from '@/components/MDHeadingRenderer';
+import { ReactMarkdown } from '@/components/ReactMarkdown';
 
 const Component = dynamic({
   loader: async () => {
     const md = await import('./newton-rhapson.md');
 
     return () => (
-      <ReactMarkdown source={md.default} renderers={{heading: MDHeadingRenderer}} />
+      <ReactMarkdown source={md.default} />
     )
   }
 })
