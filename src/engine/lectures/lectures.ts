@@ -1,5 +1,5 @@
-import { LectureLevel, LectureURLQuery } from '@/types/lectures';
 import fs from 'fs';
+import { LectureLevel, LectureURLQuery } from '@/types/lectures';
 
 type Directory = {
   directory: string;
@@ -78,6 +78,21 @@ export function getLectureLevel(urlQuery?: LectureURLQuery): LectureLevel {
   }
 };
 
+export function getParentLectureLevel(lectureLevel: LectureLevel): LectureLevel {
+  switch (lectureLevel) {
+    case 'chapter':
+      return 'subject';
+    case 'subject':
+      return 'minor';
+    case 'minor':
+      return 'major';
+    case 'major':
+      return null;
+    default:
+      return null;
+  }
+};
+
 export function getSiblingLectures(lectureLevel: LectureLevel, urlQuery: LectureURLQuery): Array<string> {
   switch (lectureLevel) {
     case 'major':
@@ -91,4 +106,4 @@ export function getSiblingLectures(lectureLevel: LectureLevel, urlQuery: Lecture
     default:
       return []
   }
-}
+};

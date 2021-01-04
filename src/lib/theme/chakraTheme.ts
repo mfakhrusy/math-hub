@@ -11,6 +11,9 @@ export const chakraTheme = extendTheme({
     },
     tertiary: {
       "200": "9CFFFA"
+    },
+    grey: {
+      450: '#454545',
     }
   }
 });

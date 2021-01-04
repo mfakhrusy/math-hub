@@ -3,13 +3,13 @@ import { PropsWithChildren } from "react";
 import { Sidebar } from "./Sidebar";
 
 type Props = {
-  sidebarItems: Array<string>
+  siblingLectures: Array<string>
 }
 
-export function Layout({children, sidebarItems}: PropsWithChildren<Props>) {
+export function Layout({children, siblingLectures}: PropsWithChildren<Props>) {
   return (
     <Flex>
-      <Sidebar items={sidebarItems} />
+      <Sidebar siblingLectures={siblingLectures} />
       <Flex
         as="main"
         fontFamily="Roboto"

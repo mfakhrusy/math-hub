@@ -9,7 +9,7 @@ type Props = {
 
 export default function MinorPage({siblingLectures}: Props) {
   return (
-    <Layout sidebarItems={siblingLectures}>
+    <Layout siblingLectures={siblingLectures}>
       minor page
     </Layout>
   );

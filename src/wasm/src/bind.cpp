@@ -16,4 +16,4 @@ int multiply(int x, int y) {
 EMSCRIPTEN_BINDINGS(my_module) {
     function("lerp", &lerp);
     function("multiply", &multiply);
-}
+};

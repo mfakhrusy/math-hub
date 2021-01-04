@@ -1,29 +1,31 @@
-import { Center, Flex, Image, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { Center, Flex, Heading, Image, Text } from "@chakra-ui/react";
+import { getLectureLevel, getParentLectureLevel } from "@/engine/lectures/lectures";
+import { sentenceCase } from "@/lib/stringUtils";
 import { Spacer } from "@/components/Spacer";
-import { ChevronLeftIcon } from "@chakra-ui/icons";
-import { LectureURLQuery } from "@/types/lectures";
-import { getLectureLevel } from "@/engine/lectures/lectures";
+import { SidebarGoBackButton } from "./SidebarGoBackButton";
 
 type Props = {
-  items: Array<string>
+  siblingLectures: Array<string>
 }
 
-export function Sidebar({items}: Props) {
+export function Sidebar({siblingLectures}: Props) {
   const router = useRouter();
+  const query = router.query;
+  const lectureLevel = getLectureLevel(query);
+  const lectureName = query[lectureLevel ?? ''] as string | undefined;
+  const parentLectureName = query[getParentLectureLevel(lectureLevel) ?? ''] as string | undefined;
 
-  const goBack = (query: LectureURLQuery) => {
-    let lectureLevel = getLectureLevel(query);
-
+  const onClickSiblingLecture = (lecture: string) => {
     switch (lectureLevel) {
       case 'major':
-        return router.push("/");
+        return router.push(`/${lecture}`);
       case 'minor':
-        return router.push(`/${query.major}`)
+        return router.push(`/${query.major}/${lecture}`)
       case 'subject':
-        return router.push(`/${query.major}/${query.minor}`)
+        return router.push(`/${query.major}/${query.minor}/${lecture}`)
       case 'chapter':
-        return router.push(`/${query.major}/${query.minor}/${query.subject}`)
+        return router.push(`/${query.major}/${query.minor}/${query.subject}/${lecture}`)
       default:
         return {}
     }
@@ -31,7 +33,6 @@ export function Sidebar({items}: Props) {
 
   return (
     <Flex
-      // position="absolute"
       minWidth="300px"
       backgroundColor="primary.100"
       height="100vh"
@@ -46,14 +47,25 @@ export function Sidebar({items}: Props) {
         <Image src="/assets/mathematic-hub-logo.png" width="140px" height="140px" />
       </Center>
       <Spacer height={2} />
-      <Flex onClick={() => goBack(router.query)} alignItems="center" cursor="pointer">
-        <ChevronLeftIcon width="24px" height="24px" />
-        <Text>Go Back</Text>
-      </Flex>
-      <Flex flexDirection="column">
-        {items.map((item) => (
-          <Flex>
-            <Text>{item}</Text>
+      <SidebarGoBackButton />
+      <Spacer height={4} />
+      <Flex flexDirection="column" paddingX={4}>
+        <Heading size="sm">
+          {`Content of ${parentLectureName ? sentenceCase(parentLectureName) : 'All'}:`}
+        </Heading>
+        <Spacer height={4} />
+        {siblingLectures.map((lecture, index) => (
+          <Flex
+            key={index}
+            marginBottom={2}
+            width="100%"
+            cursor="pointer"
+            _hover={{color: 'black'}}
+            color='grey.450'
+            fontWeight={lecture === lectureName ? '600' : '500'}
+            onClick={() => onClickSiblingLecture(lecture)}
+          >
+            <Text>{sentenceCase(lecture)}</Text>
           </Flex>
         ))}
       </Flex>

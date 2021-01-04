@@ -9,7 +9,7 @@ type Props = {
 
 export default function MajorPage({siblingLectures}: Props) {
   return (
-    <Layout sidebarItems={siblingLectures}>
+    <Layout siblingLectures={siblingLectures}>
       major page
     </Layout>
   );

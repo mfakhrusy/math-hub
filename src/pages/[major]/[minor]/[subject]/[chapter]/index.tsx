@@ -12,15 +12,15 @@ type Props = {
 export default function ChapterPage({siblingLectures}: Props) {
   const router = useRouter();
   const { major, minor, subject, chapter } = router.query as LectureURLQuery;
-  const Component = dynamic(
+  const Component = dynamic<{boh: string}>(
     () => import(`../../../../../lectures/${major}/${minor}/${subject}/${chapter}/${chapter}.tsx`)
     .catch(() => {
       return () => <div> error </div>
     })
-  )
+  );
   return (
-  <Layout sidebarItems={siblingLectures}>
-    <Component />
+  <Layout siblingLectures={siblingLectures}>
+    <Component boh="beh" />
   </Layout>
   )
 };
