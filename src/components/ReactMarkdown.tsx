@@ -1,5 +1,5 @@
 import ReactMardown_ from 'react-markdown';
-import { MDHeadingRenderer } from './MDHeadingRenderer';
+import { MDRendererHeading } from './MDRendererHeading';
 
 type Props = {
   source: string;
@@ -10,8 +10,8 @@ export function ReactMarkdown({source}: Props) {
     <ReactMardown_
       source={source}
       renderers={{
-        heading: MDHeadingRenderer
+        heading: MDRendererHeading
       }}
     />
   )
-}
+};

@@ -14,6 +14,8 @@ export function Layout({children, siblingLectures}: PropsWithChildren<Props>) {
         as="main"
         fontFamily="Roboto"
         flexGrow={1}
+        backgroundColor="grey.50"
+        color="grey.450"
         // width="100%"
       >
         {children}

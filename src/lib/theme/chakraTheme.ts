@@ -13,7 +13,8 @@ export const chakraTheme = extendTheme({
       "200": "9CFFFA"
     },
     grey: {
+      50: "#fafafa",
       450: '#454545',
-    }
+    },
   }
 });

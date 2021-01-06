@@ -6,7 +6,7 @@ type Props = {
   level: number;
 }
 
-export function MDHeadingRenderer(props: PropsWithChildren<Props>) {
+export function MDRendererHeading(props: PropsWithChildren<Props>) {
   if (props.level === 1) {
     return <Heading size="xl">{props.children}</Heading>
   }
