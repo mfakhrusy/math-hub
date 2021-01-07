@@ -3,7 +3,7 @@ import {
   getAllMinorFromMajor,
   getSiblingLectures,
 } from "@/engine/lectures/lectures";
-import { Layout } from "@/modules/layout";
+import { LecturesLayout } from "@/modules/lectures";
 import { LectureURLQuery } from "@/types/lectures";
 import { GetStaticPaths, GetStaticProps } from "next";
 
@@ -12,18 +12,21 @@ type Props = {
 };
 
 export default function MinorPage({ siblingLectures }: Props) {
-  return <Layout siblingLectures={siblingLectures}>minor page</Layout>;
+  return (
+    <LecturesLayout siblingLectures={siblingLectures}>
+      minor page
+    </LecturesLayout>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allMajor = getAllMajor().map(({ directory }) => directory);
+  const allMajor = getAllMajor();
 
   let allMinorPaths = [];
 
   for (let i = 0; i < allMajor.length; i++) {
     const major = allMajor[i];
-    const allMinor =
-      getAllMinorFromMajor(major)?.map(({ directory }) => directory) ?? [];
+    const allMinor = getAllMinorFromMajor(major) ?? [];
 
     for (let j = 0; j < allMinor.length; j++) {
       const minorPath = {

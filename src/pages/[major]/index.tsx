@@ -1,5 +1,5 @@
 import { getAllMajor, getSiblingLectures } from "@/engine/lectures/lectures";
-import { Layout } from "@/modules/layout";
+import { LecturesLayout } from "@/modules/lectures/components/LecturesLayout";
 import { LectureURLQuery } from "@/types/lectures";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 
@@ -8,13 +8,17 @@ type Props = {
 };
 
 export default function MajorPage({ siblingLectures }: Props) {
-  return <Layout siblingLectures={siblingLectures}>major page</Layout>;
+  return (
+    <LecturesLayout siblingLectures={siblingLectures}>
+      major page
+    </LecturesLayout>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allMajorPaths = getAllMajor().map(({ directory }) => ({
+  const allMajorPaths = getAllMajor().map((major) => ({
     params: {
-      major: directory,
+      major,
     },
   }));
 

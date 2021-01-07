@@ -9,7 +9,7 @@ import {
   getAllSubjectFromMinor,
   getSiblingLectures,
 } from "@/engine/lectures/lectures";
-import { Layout } from "@/modules/layout";
+import { LecturesLayout } from "@/modules/lectures";
 
 type Props = {
   siblingLectures: Array<string>;
@@ -26,35 +26,29 @@ export default function ChapterPage({ siblingLectures }: Props) {
     })
   );
   return (
-    <Layout siblingLectures={siblingLectures}>
+    <LecturesLayout siblingLectures={siblingLectures}>
       <Component boh="beh" />
-    </Layout>
+    </LecturesLayout>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allMajor = getAllMajor().map(({ directory }) => directory);
+  const allMajor = getAllMajor();
 
   let allChapterPath = [];
 
   for (let i = 0; i < allMajor.length; i++) {
     const major = allMajor[i];
-    const allMinor =
-      getAllMinorFromMajor(major)?.map(({ directory }) => directory) ?? [];
+    const allMinor = getAllMinorFromMajor(major) ?? [];
 
     for (let j = 0; j < allMinor.length; j++) {
       const minor = allMinor[j];
-      const allSubject =
-        getAllSubjectFromMinor(major, minor)?.map(
-          ({ directory }) => directory
-        ) ?? [];
+      const allSubject = getAllSubjectFromMinor(major, minor) ?? [];
 
       for (let k = 0; k < allSubject.length; k++) {
         const subject = allSubject[k];
         const allChapter =
-          getAllChapterFromSubject(major, minor, subject)?.map(
-            ({ directory }) => directory
-          ) ?? [];
+          getAllChapterFromSubject(major, minor, subject) ?? [];
 
         for (let l = 0; l < allChapter.length; l++) {
           const chapterPath = {

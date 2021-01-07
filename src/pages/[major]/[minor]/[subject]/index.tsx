@@ -4,7 +4,7 @@ import {
   getAllSubjectFromMinor,
   getSiblingLectures,
 } from "@/engine/lectures/lectures";
-import { Layout } from "@/modules/layout";
+import { LecturesLayout } from "@/modules/lectures";
 import { LectureURLQuery } from "@/types/lectures";
 import { GetStaticPaths, GetStaticProps } from "next";
 
@@ -13,25 +13,25 @@ type Props = {
 };
 
 export default function SubjectPage({ siblingLectures }: Props) {
-  return <Layout siblingLectures={siblingLectures}>subject page</Layout>;
+  return (
+    <LecturesLayout siblingLectures={siblingLectures}>
+      subject page
+    </LecturesLayout>
+  );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allMajor = getAllMajor().map(({ directory }) => directory);
+  const allMajor = getAllMajor();
 
   let allSubjectPaths = [];
 
   for (let i = 0; i < allMajor.length; i++) {
     const major = allMajor[i];
-    const allMinor =
-      getAllMinorFromMajor(major)?.map(({ directory }) => directory) ?? [];
+    const allMinor = getAllMinorFromMajor(major) ?? [];
 
     for (let j = 0; j < allMinor.length; j++) {
       const minor = allMinor[j];
-      const allSubject =
-        getAllSubjectFromMinor(major, minor)?.map(
-          ({ directory }) => directory
-        ) ?? [];
+      const allSubject = getAllSubjectFromMinor(major, minor) ?? [];
 
       for (let k = 0; k < allSubject.length; k++) {
         const subjectPath = {

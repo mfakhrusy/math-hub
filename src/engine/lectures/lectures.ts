@@ -6,19 +6,16 @@ type Directory = {
   filename: string;
 };
 
-export function getAllMajor(): Array<Directory> {
+export function getAllMajor(): Array<string> {
   const folders = fs
     .readdirSync?.(`${process.cwd()}/src/lectures`, { withFileTypes: true })
     .filter((dirent) => dirent.isDirectory())
-    .map(({ name }) => ({
-      directory: name,
-      filename: `${name}.md`,
-    }));
+    .map(({ name }) => name);
 
   return folders;
 }
 
-export function getAllMinorFromMajor(major?: string): Array<Directory> | null {
+export function getAllMinorFromMajor(major?: string): Array<string> | null {
   if (!major) {
     return null;
   }
@@ -28,10 +25,7 @@ export function getAllMinorFromMajor(major?: string): Array<Directory> | null {
       withFileTypes: true,
     })
     .filter((dirent) => dirent.isDirectory())
-    .map(({ name }) => ({
-      directory: name,
-      filename: `${name}.md`,
-    }));
+    .map(({ name }) => name);
 
   return folders;
 }
@@ -39,7 +33,7 @@ export function getAllMinorFromMajor(major?: string): Array<Directory> | null {
 export function getAllSubjectFromMinor(
   major?: string,
   minor?: string
-): Array<Directory> | null {
+): Array<string> | null {
   if (!major || !minor) {
     return null;
   }
@@ -48,10 +42,7 @@ export function getAllSubjectFromMinor(
       withFileTypes: true,
     })
     .filter((dirent) => dirent.isDirectory())
-    .map(({ name }) => ({
-      directory: name,
-      filename: `${name}.md`,
-    }));
+    .map(({ name }) => name);
 
   return folders;
 }
@@ -60,7 +51,7 @@ export function getAllChapterFromSubject(
   major?: string,
   minor?: string,
   subject?: string
-): Array<Directory> | null {
+): Array<string> | null {
   if (!major || !minor || !subject) {
     return null;
   }
@@ -70,10 +61,7 @@ export function getAllChapterFromSubject(
       { withFileTypes: true }
     )
     .filter((dirent) => dirent.isDirectory())
-    .map(({ name }) => ({
-      directory: name,
-      filename: `${name}.md`,
-    }));
+    .map(({ name }) => name);
 
   return folders;
 }
@@ -115,26 +103,18 @@ export function getSiblingLectures(
 ): Array<string> {
   switch (lectureLevel) {
     case "major":
-      return getAllMajor()?.map(({ directory }) => directory);
+      return getAllMajor();
     case "minor":
-      return (
-        getAllMinorFromMajor(urlQuery.major)?.map(
-          ({ directory }) => directory
-        ) ?? []
-      );
+      return getAllMinorFromMajor(urlQuery.major) ?? [];
     case "subject":
-      return (
-        getAllSubjectFromMinor(urlQuery.major, urlQuery.minor)?.map(
-          ({ directory }) => directory
-        ) ?? []
-      );
+      return getAllSubjectFromMinor(urlQuery.major, urlQuery.minor) ?? [];
     case "chapter":
       return (
         getAllChapterFromSubject(
           urlQuery.major,
           urlQuery.minor,
           urlQuery.subject
-        )?.map(({ directory }) => directory) ?? []
+        ) ?? []
       );
     default:
       return [];
