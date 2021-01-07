@@ -1,18 +1,25 @@
-import { Center, Container, Text } from "@chakra-ui/react";
+import { GetStaticProps } from "next";
+import { HomeView } from "@/modules/home";
+import { getAllMajor } from "@/engine/lectures/lectures";
+import { getAllTools } from "@/engine/tools/tools";
 
-export default function Home() {
-  return (
-    <Center width="100%" borderBottom="1px solid #CCCCCC">
-      <Container
-        display="flex"
-        maxWidth="800px"
-        height="250px"
-        alignItems="center"
-        justifyContent="center"
-        centerContent
-      >
-        <Text>Welcome to math-hub</Text>
-      </Container>
-    </Center>
-  );
+type Props = {
+  allMajor: Array<string>;
+  allTools: Array<string>;
+};
+
+export default function Home({ allMajor, allTools }: Props) {
+  return <HomeView allMajor={allMajor} allTools={allTools} />;
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allMajor = getAllMajor();
+  const allTools = getAllTools();
+
+  return {
+    props: {
+      allMajor,
+      allTools,
+    },
+  };
+};
