@@ -1,3 +1,3 @@
 export default function NewtonRhapson() {
-  return <div>newton rhapson</div>
+  return <div>newton rhapson</div>;
 }

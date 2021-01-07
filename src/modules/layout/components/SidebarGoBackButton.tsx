@@ -10,22 +10,26 @@ export function SidebarGoBackButton() {
 
   const goBack = (query: LectureURLQuery) => {
     switch (lectureLevel) {
-      case 'major':
+      case "major":
         return router.push("/");
-      case 'minor':
-        return router.push(`/${query.major}`)
-      case 'subject':
-        return router.push(`/${query.major}/${query.minor}`)
-      case 'chapter':
-        return router.push(`/${query.major}/${query.minor}/${query.subject}`)
+      case "minor":
+        return router.push(`/${query.major}`);
+      case "subject":
+        return router.push(`/${query.major}/${query.minor}`);
+      case "chapter":
+        return router.push(`/${query.major}/${query.minor}/${query.subject}`);
       default:
-        return {}
+        return {};
     }
   };
   return (
-      <Flex onClick={() => goBack(router.query)} alignItems="center" cursor="pointer">
-        <ChevronLeftIcon width="24px" height="24px" />
-        <Text>Go Back</Text>
-      </Flex>
-  )
-};
+    <Flex
+      onClick={() => goBack(router.query)}
+      alignItems="center"
+      cursor="pointer"
+    >
+      <ChevronLeftIcon width="24px" height="24px" />
+      <Text>Go Back</Text>
+    </Flex>
+  );
+}

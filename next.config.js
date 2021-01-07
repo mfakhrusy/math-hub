@@ -2,17 +2,15 @@ module.exports = {
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.node = {
-        fs: 'empty'
-      }
+        fs: "empty",
+      };
     }
-    config.output.webassemblyModuleFilename = 'static/wasm/[modulehash].wasm'
-    config.module.rules.push(
-      {
-        test: /\.md$/,
-        use: 'raw-loader'
-      }
-    );
+    config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
+    config.module.rules.push({
+      test: /\.md$/,
+      use: "raw-loader",
+    });
 
-    return config
-  }
+    return config;
+  },
 };

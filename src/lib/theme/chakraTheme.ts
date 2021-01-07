@@ -7,14 +7,14 @@ export const chakraTheme = extendTheme({
       "500": "#E85F5C",
     },
     secondary: {
-      "300": "#ACF39D"
+      "300": "#ACF39D",
     },
     tertiary: {
-      "200": "9CFFFA"
+      "200": "9CFFFA",
     },
     grey: {
       50: "#fafafa",
-      450: '#454545',
+      450: "#454545",
     },
-  }
+  },
 });

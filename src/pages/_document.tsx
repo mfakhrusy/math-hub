@@ -3,7 +3,7 @@ import Document, { Head, Main, NextScript, Html } from "next/document";
 export default class MyDocument extends Document {
   render(): JSX.Element {
     return (
-      <Html style={{margin: 0}}>
+      <Html style={{ margin: 0 }}>
         <Head>
           <link rel="preconnect" href="https://fonts.gstatic.com" />
           <link
@@ -11,7 +11,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body style={{margin: 0}}>
+        <body style={{ margin: 0 }}>
           <Main />
           <NextScript />
         </body>

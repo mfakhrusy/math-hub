@@ -3,10 +3,13 @@ import { PropsWithChildren } from "react";
 import { Sidebar } from "./Sidebar";
 
 type Props = {
-  siblingLectures: Array<string>
-}
+  siblingLectures: Array<string>;
+};
 
-export function Layout({children, siblingLectures}: PropsWithChildren<Props>) {
+export function Layout({
+  children,
+  siblingLectures,
+}: PropsWithChildren<Props>) {
   return (
     <Flex>
       <Sidebar siblingLectures={siblingLectures} />
@@ -21,5 +24,5 @@ export function Layout({children, siblingLectures}: PropsWithChildren<Props>) {
         {children}
       </Flex>
     </Flex>
-  )
-};
+  );
+}

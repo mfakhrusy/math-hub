@@ -14,5 +14,5 @@ export default function Home() {
         <Text>Welcome to math-hub</Text>
       </Container>
     </Center>
-  )
-};
+  );
+}

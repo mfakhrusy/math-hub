@@ -3,6 +3,6 @@ export interface LectureURLQuery {
   minor?: string;
   subject?: string;
   chapter?: string;
-};
+}
 
-export type LectureLevel = (keyof LectureURLQuery) | null;
+export type LectureLevel = keyof LectureURLQuery | null;

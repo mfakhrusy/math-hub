@@ -1,32 +1,30 @@
-import { compile } from 'mathjs';
-import dynamic from 'next/dynamic';
-import { ReactMarkdown } from '@/components/ReactMarkdown';
-import { Spacer } from '@/components/Spacer';
-import { Button, Flex, Heading, Input, Text } from '@chakra-ui/react';
-import { scaleLinear } from '@visx/scale';
-import { LinePath } from '@visx/shape';
-import { curveNatural } from '@visx/curve';
-import { range } from 'mathjs';
-import { useState } from 'react';
+import { compile } from "mathjs";
+import dynamic from "next/dynamic";
+import { ReactMarkdown } from "@/components/ReactMarkdown";
+import { Spacer } from "@/components/Spacer";
+import { Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { scaleLinear } from "@visx/scale";
+import { LinePath } from "@visx/shape";
+import { curveNatural } from "@visx/curve";
+import { range } from "mathjs";
+import { useState } from "react";
 
 const Introduction = dynamic({
   loader: async () => {
-    const md = await import('./newton-rhapson.md');
+    const md = await import("./newton-rhapson.md");
 
-    return () => (
-      <ReactMarkdown source={md.default} />
-    );
-  }
+    return () => <ReactMarkdown source={md.default} />;
+  },
 });
 
 type Data = {
   x: number;
   y: number;
-}
+};
 
 const xSet = range(-2, 2.1, 0.1).toArray() as Array<number>;
 
-const baseFunc = 'x - 4';
+const baseFunc = "x - 4";
 
 const calculateExpr = (func: string) => compile(func);
 
@@ -39,20 +37,22 @@ export default function NewtonRhapson() {
   const width = 200;
   const height = 400;
 
-const ySet: Array<number> = xSet.map((x: number) => calculateExpr(func).evaluate({x: x}))
+  const ySet: Array<number> = xSet.map((x: number) =>
+    calculateExpr(func).evaluate({ x: x })
+  );
 
-const xScale = scaleLinear<number>({
-  domain: [-2, 3],
-});
+  const xScale = scaleLinear<number>({
+    domain: [-2, 3],
+  });
 
-const yScale = scaleLinear<number>({
-  domain: [-4, 4],
-});
+  const yScale = scaleLinear<number>({
+    domain: [-4, 4],
+  });
 
-const data: Array<Data> = xSet.map((x: number, i) => ({
-  x: x,
-  y: ySet[i]
-}));
+  const data: Array<Data> = xSet.map((x: number, i) => ({
+    x: x,
+    y: ySet[i],
+  }));
 
   xScale.range([0, width - 50]);
   yScale.range([height - 2, 0]);
@@ -67,8 +67,13 @@ const data: Array<Data> = xSet.map((x: number, i) => ({
           <Text>{`example: ${baseFunc}`}</Text>
           <Spacer height={5} />
           <Flex>
-            <Input value={inputFunc} onChange={(e) => setInputFunc(e.target.value)} variant="flushed" width="200px" />
-          <Spacer width={5} />
+            <Input
+              value={inputFunc}
+              onChange={(e) => setInputFunc(e.target.value)}
+              variant="flushed"
+              width="200px"
+            />
+            <Spacer width={5} />
             <Button onClick={() => setFunc(inputFunc)}>Ok!</Button>
           </Flex>
         </Flex>
@@ -78,8 +83,8 @@ const data: Array<Data> = xSet.map((x: number, i) => ({
               height="100"
               curve={curveNatural}
               data={data}
-              x={d => xScale(getX(d)) ?? 0}
-              y={d => yScale(getY(d)) ?? 0}
+              x={(d) => xScale(getX(d)) ?? 0}
+              y={(d) => yScale(getY(d)) ?? 0}
               stroke="#333"
               strokeWidth={2}
               strokeOpacity={1}
@@ -88,5 +93,5 @@ const data: Array<Data> = xSet.map((x: number, i) => ({
         </Flex>
       </Flex>
     </Flex>
-  )
-};
+  );
+}

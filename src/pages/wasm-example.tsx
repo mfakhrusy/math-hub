@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic';
-import wasmModule from '../wasm/build/bind';
+import dynamic from "next/dynamic";
+import wasmModule from "../wasm/build/bind";
 
 interface Props {
   firstNumber: number;
@@ -10,13 +10,16 @@ const Add = dynamic<Props>({
   loader: async () => {
     const wasm = await wasmModule();
 
-    return ({firstNumber, lastNumber}) => {
-
+    return ({ firstNumber, lastNumber }) => {
       return (
-      <div>{`lerp: ${wasm.lerp(3, 4, 4)}; multiply: ${wasm.multiply(firstNumber, lastNumber)}`}</div>
-    )}
+        <div>{`lerp: ${wasm.lerp(3, 4, 4)}; multiply: ${wasm.multiply(
+          firstNumber,
+          lastNumber
+        )}`}</div>
+      );
+    };
   },
-  ssr: false
+  ssr: false,
 });
 
 export default function Index() {
