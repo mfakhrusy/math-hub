@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+import { AxisBottom, AxisLeft } from "@visx/axis";
 import { curveNatural } from "@visx/curve";
 import { scaleLinear } from "@visx/scale";
 import { LinePath } from "@visx/shape";
@@ -60,6 +61,8 @@ export function EquationVisualizerGraphField() {
     >
       {graphFieldRef.current && (
         <svg width="100%" height="100%">
+          <AxisBottom scale={xScale} top={store.graphFieldSize.height / 2}/>
+          <AxisLeft scale={yScale} left={store.graphFieldSize.width / 2} />
           <LinePath<Data>
             curve={curveNatural}
             data={data}
