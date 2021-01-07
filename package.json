@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "next dev -p 3005",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "pretty": "yarn prettier --write ."
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.0.2",
