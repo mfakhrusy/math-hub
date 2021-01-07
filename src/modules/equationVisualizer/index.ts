@@ -1,1 +1,1 @@
-export * from './components/EquationVisualizerView';
+export * from "./components/EquationVisualizerView";

@@ -32,7 +32,8 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-markdown": "^5.0.3",
-    "xstate": "^4.15.3"
+    "xstate": "^4.15.3",
+    "zustand": "^3.2.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.167",
