@@ -2,6 +2,7 @@ import { Spacer } from "@/components/Spacer";
 import { Divider, Flex, Heading } from "@chakra-ui/react";
 import { EquationVisualizerGraphField } from "./EquationVisualizerGraphField";
 import { EquationVisualizerInput } from "./EquationVisualizerInput";
+import { EquationVisualizerRangeInput } from "./EquationVisualizerRangeInput";
 
 export function EquationVisualizerView() {
   return (
@@ -13,7 +14,7 @@ export function EquationVisualizerView() {
           <EquationVisualizerInput />
         </Flex>
         <Divider orientation="vertical" backgroundColor="#AEAEAE" width="2px" />
-        <Flex></Flex>
+        <EquationVisualizerRangeInput />
       </Flex>
       <EquationVisualizerGraphField />
     </Flex>

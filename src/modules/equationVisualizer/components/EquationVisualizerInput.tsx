@@ -9,7 +9,7 @@ export function EquationVisualizerInput() {
     <Flex alignItems="center">
       <Flex flexDirection="column">
         <Text>Enter math expression:</Text>
-        <Text as="small">(example: x^2 + 4*e^x)</Text>
+        <Text as="small">(example: x^2 - 10)</Text>
       </Flex>
       <Spacer width="20px" />
       <Input

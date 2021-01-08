@@ -30,18 +30,22 @@ export function EquationVisualizerGraphField() {
     }
   }, [graphFieldRef?.current?.clientHeight]);
 
-  const xSet = range(-40, 41, 0.1).toArray() as Array<number>;
+  const xSet = range(
+    store.axisRange.x.min,
+    store.axisRange.x.max + 1,
+    0.1
+  ).toArray() as Array<number>;
 
   const ySet: Array<number> = xSet.map((x: number) =>
     calculateExpr(store.displayedFunc).evaluate({ x: x })
   );
 
   const xScale = scaleLinear<number>({
-    domain: [-40, 40],
+    domain: [store.axisRange.x.min, store.axisRange.x.max],
   });
 
   const yScale = scaleLinear<number>({
-    domain: [-40, 40],
+    domain: [store.axisRange.y.min, store.axisRange.y.max],
   });
 
   const data: Array<Data> = xSet.map((x: number, i) => ({
@@ -61,7 +65,7 @@ export function EquationVisualizerGraphField() {
     >
       {graphFieldRef.current && (
         <svg width="100%" height="100%">
-          <AxisBottom scale={xScale} top={store.graphFieldSize.height / 2}/>
+          <AxisBottom scale={xScale} top={store.graphFieldSize.height / 2} />
           <AxisLeft scale={yScale} left={store.graphFieldSize.width / 2} />
           <LinePath<Data>
             curve={curveNatural}
