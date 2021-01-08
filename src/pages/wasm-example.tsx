@@ -25,3 +25,7 @@
 // export default function Index() {
 //   return <Add firstNumber={1} lastNumber={300} />;
 // }
+
+export default function WasmExample() {
+  return <div>hello world</div>
+}
