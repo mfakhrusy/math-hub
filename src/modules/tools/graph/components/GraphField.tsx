@@ -3,23 +3,26 @@ import { AxisBottom, AxisLeft } from "@visx/axis";
 import { curveNatural } from "@visx/curve";
 import { scaleLinear } from "@visx/scale";
 import { LinePath } from "@visx/shape";
-import { compile, range } from "mathjs";
 import { useEffect, useRef } from "react";
-import { useEquationVisualizerStore } from "../equationVisualizerStore";
+import { useGraphStore } from "../graphStore";
 
 type Data = {
   x: number;
   y: number;
 };
 
-const calculateExpr = (func: string) => compile(func);
+export type DataRange = Array<Data>;
 
 const getX = (d: Data) => d.x;
 const getY = (d: Data) => d.y;
 
-export function EquationVisualizerGraphField() {
+type Props = {
+  dataRange: DataRange;
+};
+
+export function GraphField({ dataRange }: Props) {
   const graphFieldRef = useRef<HTMLDivElement>(null);
-  const store = useEquationVisualizerStore();
+  const store = useGraphStore();
 
   useEffect(() => {
     if (graphFieldRef?.current?.clientHeight) {
@@ -30,16 +33,6 @@ export function EquationVisualizerGraphField() {
     }
   }, [graphFieldRef?.current?.clientHeight]);
 
-  const xSet = range(
-    store.axisRange.x.min,
-    store.axisRange.x.max + 1,
-    0.1
-  ).toArray() as Array<number>;
-
-  const ySet: Array<number> = xSet.map((x: number) =>
-    calculateExpr(store.displayedFunc).evaluate({ x: x })
-  );
-
   const xScale = scaleLinear<number>({
     domain: [store.axisRange.x.min, store.axisRange.x.max],
   });
@@ -47,11 +40,6 @@ export function EquationVisualizerGraphField() {
   const yScale = scaleLinear<number>({
     domain: [store.axisRange.y.min, store.axisRange.y.max],
   });
-
-  const data: Array<Data> = xSet.map((x: number, i) => ({
-    x: x,
-    y: ySet[i],
-  }));
 
   xScale.range([0, store.graphFieldSize.width]);
   yScale.range([store.graphFieldSize.height, 0]);
@@ -69,7 +57,7 @@ export function EquationVisualizerGraphField() {
           <AxisLeft scale={yScale} left={store.graphFieldSize.width / 2} />
           <LinePath<Data>
             curve={curveNatural}
-            data={data}
+            data={dataRange}
             x={(d) => xScale(getX(d)) ?? 0}
             y={(d) => yScale(getY(d)) ?? 0}
             stroke="#333333"

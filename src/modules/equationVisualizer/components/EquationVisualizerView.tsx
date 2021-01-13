@@ -1,22 +1,33 @@
-import { Spacer } from "@/components/Spacer";
-import { Divider, Flex, Heading } from "@chakra-ui/react";
-import { EquationVisualizerGraphField } from "./EquationVisualizerGraphField";
-import { EquationVisualizerInput } from "./EquationVisualizerInput";
-import { EquationVisualizerRangeInput } from "./EquationVisualizerRangeInput";
+import { compile, range } from "mathjs";
+import { DataRange, GraphToolsLayout } from "@/modules/tools/graph";
+import { EquationVisualizerHeader } from "./EquationVisualizerHeader";
+import { useEquationVisualizerStore } from "../equationVisualizerStore";
+import { useGraphStore } from "@/modules/tools/graph/graphStore";
+
+const calculateExpr = (func: string) => compile(func);
 
 export function EquationVisualizerView() {
+  const equationVisualizerStore = useEquationVisualizerStore();
+  const graphStore = useGraphStore();
+
+  const xDataRange = range(
+    graphStore.axisRange.x.min,
+    graphStore.axisRange.x.max + 1,
+    0.1
+  ).toArray() as Array<number>;
+
+  const yDataRange: Array<number> = xDataRange.map((x: number) =>
+    calculateExpr(equationVisualizerStore.displayedFunc).evaluate({ x: x })
+  );
+
+  const dataRange: DataRange = xDataRange.map((x: number, i) => ({
+    x: x,
+    y: yDataRange[i],
+  }));
+
   return (
-    <Flex flexDirection="column" backgroundColor="#EFEFEF" height="100vh">
-      <Flex>
-        <Flex flexDirection="column" padding="20px">
-          <Heading size="md">Math Equation Visualizer</Heading>
-          <Spacer height="20px" />
-          <EquationVisualizerInput />
-        </Flex>
-        <Divider orientation="vertical" backgroundColor="#AEAEAE" width="2px" />
-        <EquationVisualizerRangeInput />
-      </Flex>
-      <EquationVisualizerGraphField />
-    </Flex>
+    <GraphToolsLayout dataRange={dataRange}>
+      <EquationVisualizerHeader />
+    </GraphToolsLayout>
   );
 }
