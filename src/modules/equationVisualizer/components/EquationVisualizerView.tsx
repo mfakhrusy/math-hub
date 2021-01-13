@@ -26,7 +26,7 @@ export function EquationVisualizerView() {
 
   try {
     yDataRange = xDataRange.map((x: number) =>
-      calculateExpr(equationVisualizerStore.displayedFunc)?.evaluate({ x: x })
+      calculateExpr(equationVisualizerStore.displayedFunc).evaluate({ x: x })
     );
   } catch (err) {
     if (errorToastRef.current) {
