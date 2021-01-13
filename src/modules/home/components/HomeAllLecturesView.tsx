@@ -19,8 +19,8 @@ export function HomeAllLecturesView({ allMajor }: Props) {
       <Heading size="lg">All Lectures</Heading>
       <Spacer height="25px" />
       <Flex>
-        {allMajor.map((major) => (
-          <Link href="/[major]" as={`/${major}`}>
+        {allMajor.map((major, index) => (
+          <Link href="/[major]" as={`/${major}`} key={index}>
             <Flex
               width="400px"
               height="100px"

@@ -9,7 +9,6 @@ export function HomeHeader() {
       justifyContent="center"
       borderBottom="1px solid #CCCCCC"
       width="100%"
-      centerContent
     >
       <Image src="/assets/mathematic-hub-logo.png" />
     </Flex>

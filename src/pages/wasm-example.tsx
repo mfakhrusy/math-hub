@@ -27,5 +27,5 @@
 // }
 
 export default function WasmExample() {
-  return <div>hello world</div>
+  return <div>hello world</div>;
 }
