@@ -7,12 +7,13 @@ import {
 import { sentenceCase } from "@/lib/stringUtils";
 import { Spacer } from "@/components/Spacer";
 import { LecturesSidebarGoBackButton } from "./LecturesSidebarGoBackButton";
+import { ReactElement } from "react";
 
 type Props = {
   siblingLectures: Array<string>;
 };
 
-export function LecturesSidebar({ siblingLectures }: Props) {
+export function LecturesSidebar({ siblingLectures }: Props): ReactElement {
   const router = useRouter();
   const query = router.query;
   const lectureLevel = getLectureLevel(query);

@@ -1,10 +1,11 @@
 import { Flex, Image } from "@chakra-ui/react";
+import { ReactElement } from "react";
 
 type Props = {
   onClick: () => void;
 };
 
-export function FloatingGraphConfig({ onClick }: Props) {
+export function FloatingGraphConfig({ onClick }: Props): ReactElement {
   return (
     <Flex
       id="draggableSource"

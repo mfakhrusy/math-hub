@@ -14,12 +14,13 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react";
+import { ReactElement } from "react";
 import { GraphRangeSetting } from "./GraphRangeSetting";
 
 export function GraphSettingModal({
   isOpen,
   onClose,
-}: Omit<ModalProps, "children">) {
+}: Omit<ModalProps, "children">): ReactElement {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

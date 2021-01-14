@@ -7,7 +7,7 @@ import { scaleLinear } from "@visx/scale";
 import { LinePath } from "@visx/shape";
 import { curveNatural } from "@visx/curve";
 import { range } from "mathjs";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 
 const Introduction = dynamic({
   loader: async () => {
@@ -31,7 +31,7 @@ const calculateExpr = (func: string) => compile(func);
 const getX = (d: Data) => d.x;
 const getY = (d: Data) => d.y;
 
-export default function NewtonRhapson() {
+export default function NewtonRhapson(): ReactElement {
   const [inputFunc, setInputFunc] = useState<string>(baseFunc);
   const [func, setFunc] = useState<string>(baseFunc);
   const width = 200;

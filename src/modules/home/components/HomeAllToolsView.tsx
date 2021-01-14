@@ -2,12 +2,13 @@ import Link from "next/link";
 import { Flex, Heading, Text } from "@chakra-ui/react";
 import { Spacer } from "@/components/Spacer";
 import { sentenceCase } from "@/lib/stringUtils";
+import { ReactElement } from "react";
 
 type Props = {
   allTools: Array<string>;
 };
 
-export function HomeAllToolsView({ allTools }: Props) {
+export function HomeAllToolsView({ allTools }: Props): ReactElement {
   return (
     <Flex
       width="100%"

@@ -2,12 +2,13 @@ import { getAllMajor, getSiblingLectures } from "@/engine/lectures/lectures";
 import { LecturesLayout } from "@/modules/lectures/components/LecturesLayout";
 import { LectureURLQuery } from "@/types/lectures";
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import { ReactElement } from "react";
 
 type Props = {
   siblingLectures: Array<string>;
 };
 
-export default function MajorPage({ siblingLectures }: Props) {
+export default function MajorPage({ siblingLectures }: Props): ReactElement {
   return (
     <LecturesLayout siblingLectures={siblingLectures}>
       major page

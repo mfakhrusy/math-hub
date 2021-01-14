@@ -1,6 +1,6 @@
 import { Spacer } from "@/components/Spacer";
 import { Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import { useGraphStore } from "../graphStore";
 
 type InputFieldProps = {
@@ -35,7 +35,7 @@ function InputField({ label, onConfirm, value }: InputFieldProps) {
   );
 }
 
-export function GraphRangeSetting() {
+export function GraphRangeSetting(): ReactElement {
   const store = useGraphStore();
 
   return (

@@ -2,13 +2,14 @@ import { GetStaticProps } from "next";
 import { HomeView } from "@/modules/home";
 import { getAllMajor } from "@/engine/lectures/lectures";
 import { getAllTools } from "@/engine/tools/tools";
+import { ReactElement } from "react";
 
 type Props = {
   allMajor: Array<string>;
   allTools: Array<string>;
 };
 
-export default function Home({ allMajor, allTools }: Props) {
+export default function Home({ allMajor, allTools }: Props): ReactElement {
   return <HomeView allMajor={allMajor} allTools={allTools} />;
 }
 

@@ -3,7 +3,7 @@ import { AxisBottom, AxisLeft } from "@visx/axis";
 import { curveNatural } from "@visx/curve";
 import { scaleLinear } from "@visx/scale";
 import { LinePath } from "@visx/shape";
-import { useEffect, useRef } from "react";
+import { ReactElement, useEffect, useRef } from "react";
 import { useGraphStore } from "../graphStore";
 
 type Data = {
@@ -20,7 +20,7 @@ type Props = {
   dataRange: DataRange;
 };
 
-export function GraphField({ dataRange }: Props) {
+export function GraphField({ dataRange }: Props): ReactElement {
   const graphFieldRef = useRef<HTMLDivElement>(null);
   const store = useGraphStore();
 

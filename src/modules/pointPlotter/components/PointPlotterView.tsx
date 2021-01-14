@@ -1,3 +1,3 @@
-export function PointPlotterView() {
-  return null;
+export function PointPlotterView(): JSX.Element {
+  return <div />;
 }

@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 import { LecturesSidebar } from "./LecturesSidebar";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 export function LecturesLayout({
   children,
   siblingLectures,
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<Props>): ReactElement {
   return (
     <Flex>
       <LecturesSidebar siblingLectures={siblingLectures} />

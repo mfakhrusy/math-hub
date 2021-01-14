@@ -10,12 +10,13 @@ import {
   getSiblingLectures,
 } from "@/engine/lectures/lectures";
 import { LecturesLayout } from "@/modules/lectures";
+import { ReactElement } from "react";
 
 type Props = {
   siblingLectures: Array<string>;
 };
 
-export default function ChapterPage({ siblingLectures }: Props) {
+export default function ChapterPage({ siblingLectures }: Props): ReactElement {
   const router = useRouter();
   const { major, minor, subject, chapter } = router.query as LectureURLQuery;
   const Component = dynamic<{ boh: string }>(() =>
@@ -35,7 +36,7 @@ export default function ChapterPage({ siblingLectures }: Props) {
 export const getStaticPaths: GetStaticPaths = async () => {
   const allMajor = getAllMajor();
 
-  let allChapterPath = [];
+  const allChapterPath = [];
 
   for (let i = 0; i < allMajor.length; i++) {
     const major = allMajor[i];

@@ -1,6 +1,8 @@
 // import dynamic from "next/dynamic";
 // import wasmModule from "../wasm/build/bind";
 
+import { ReactElement } from "react";
+
 // interface Props {
 //   firstNumber: number;
 //   lastNumber: number;
@@ -26,6 +28,6 @@
 //   return <Add firstNumber={1} lastNumber={300} />;
 // }
 
-export default function WasmExample() {
+export default function WasmExample(): ReactElement {
   return <div>hello world</div>;
 }

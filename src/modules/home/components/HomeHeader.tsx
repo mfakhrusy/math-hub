@@ -1,6 +1,7 @@
 import { Flex, Image } from "@chakra-ui/react";
+import { ReactElement } from "react";
 
-export function HomeHeader() {
+export function HomeHeader(): ReactElement {
   return (
     <Flex
       display="flex"

@@ -1,5 +1,6 @@
 import { PointPlotterView } from "@/modules/pointPlotter";
+import { ReactElement } from "react";
 
-export default function PointPlotter() {
+export default function PointPlotter(): ReactElement {
   return <PointPlotterView />;
 }

@@ -6,12 +6,13 @@ import {
 import { LecturesLayout } from "@/modules/lectures";
 import { LectureURLQuery } from "@/types/lectures";
 import { GetStaticPaths, GetStaticProps } from "next";
+import { ReactElement } from "react";
 
 type Props = {
   siblingLectures: Array<string>;
 };
 
-export default function MinorPage({ siblingLectures }: Props) {
+export default function MinorPage({ siblingLectures }: Props): ReactElement {
   return (
     <LecturesLayout siblingLectures={siblingLectures}>
       minor page
@@ -22,7 +23,7 @@ export default function MinorPage({ siblingLectures }: Props) {
 export const getStaticPaths: GetStaticPaths = async () => {
   const allMajor = getAllMajor();
 
-  let allMinorPaths = [];
+  const allMinorPaths = [];
 
   for (let i = 0; i < allMajor.length; i++) {
     const major = allMajor[i];

@@ -3,8 +3,9 @@ import { LectureURLQuery } from "@/types/lectures";
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
+import { ReactElement } from "react";
 
-export function LecturesSidebarGoBackButton() {
+export function LecturesSidebarGoBackButton(): ReactElement {
   const router = useRouter();
   const lectureLevel = getLectureLevel(router.query);
 

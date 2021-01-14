@@ -4,13 +4,13 @@ import { EquationVisualizerHeader } from "./EquationVisualizerHeader";
 import { useEquationVisualizerStore } from "../equationVisualizerStore";
 import { useGraphStore } from "@/modules/tools/graph/graphStore";
 import { useToast } from "@chakra-ui/react";
-import { useRef } from "react";
+import { ReactElement, useRef } from "react";
 
 const calculateExpr = (func: string) => {
   return compile(func);
 };
 
-export function EquationVisualizerView() {
+export function EquationVisualizerView(): ReactElement {
   const equationVisualizerStore = useEquationVisualizerStore();
   const graphStore = useGraphStore();
   const toast = useToast();

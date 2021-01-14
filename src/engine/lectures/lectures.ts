@@ -1,11 +1,6 @@
 import fs from "fs";
 import { LectureLevel, LectureURLQuery } from "@/types/lectures";
 
-type Directory = {
-  directory: string;
-  filename: string;
-};
-
 export function getAllMajor(): Array<string> {
   const folders = fs
     .readdirSync?.(`${process.cwd()}/src/lectures`, { withFileTypes: true })

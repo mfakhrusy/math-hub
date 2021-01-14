@@ -1,5 +1,5 @@
 import { Divider, Flex, useDisclosure } from "@chakra-ui/react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactElement } from "react";
 import { FloatingGraphConfig } from "./FloatingGraphConfig";
 import { DataRange, GraphField } from "./GraphField";
 import { GraphSettingModal } from "./GraphSettingModal";
@@ -11,7 +11,7 @@ type Props = {
 export function GraphToolsLayout({
   children,
   dataRange,
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<Props>): ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
