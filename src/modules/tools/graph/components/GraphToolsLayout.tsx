@@ -1,16 +1,19 @@
 import { Divider, Flex, useDisclosure } from "@chakra-ui/react";
 import { PropsWithChildren, ReactElement } from "react";
+import { GraphVariant, DataRange } from "../graphTools";
 import { FloatingGraphConfig } from "./FloatingGraphConfig";
-import { DataRange, GraphField } from "./GraphField";
+import { GraphField } from "./GraphField";
 import { GraphSettingModal } from "./GraphSettingModal";
 
 type Props = {
   dataRange: DataRange;
+  graphVariant?: GraphVariant;
 };
 
 export function GraphToolsLayout({
   children,
   dataRange,
+  graphVariant = "Line",
 }: PropsWithChildren<Props>): ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -22,7 +25,7 @@ export function GraphToolsLayout({
       </Flex>
       <FloatingGraphConfig onClick={onOpen} />
       <GraphSettingModal onClose={onClose} isOpen={isOpen} />
-      <GraphField dataRange={dataRange} />
+      <GraphField dataRange={dataRange} graphVariant={graphVariant} />
     </Flex>
   );
 }

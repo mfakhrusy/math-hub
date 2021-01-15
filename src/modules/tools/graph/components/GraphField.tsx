@@ -1,26 +1,18 @@
 import { Flex } from "@chakra-ui/react";
 import { AxisBottom, AxisLeft } from "@visx/axis";
-import { curveNatural } from "@visx/curve";
 import { scaleLinear } from "@visx/scale";
-import { LinePath } from "@visx/shape";
 import { ReactElement, useEffect, useRef } from "react";
 import { useGraphStore } from "../graphStore";
-
-type Data = {
-  x: number;
-  y: number;
-};
-
-export type DataRange = Array<Data>;
-
-const getX = (d: Data) => d.x;
-const getY = (d: Data) => d.y;
+import { DataRange, GraphVariant } from "../graphTools";
+import { GraphFieldLine } from "./GraphFieldLine";
+import { GraphFieldScatter } from "./GraphFieldLineScatter";
 
 type Props = {
   dataRange: DataRange;
+  graphVariant: GraphVariant;
 };
 
-export function GraphField({ dataRange }: Props): ReactElement {
+export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
   const graphFieldRef = useRef<HTMLDivElement>(null);
   const store = useGraphStore();
 
@@ -44,6 +36,29 @@ export function GraphField({ dataRange }: Props): ReactElement {
   xScale.range([0, store.graphFieldSize.width]);
   yScale.range([store.graphFieldSize.height, 0]);
 
+  const renderGraphField = (graphVariant: GraphVariant) => {
+    switch (graphVariant) {
+      case "Line":
+        return (
+          <GraphFieldLine
+            xScale={xScale}
+            yScale={yScale}
+            dataRange={dataRange}
+          />
+        );
+      case "Scatter":
+        return (
+          <GraphFieldScatter
+            xScale={xScale}
+            yScale={yScale}
+            dataRange={dataRange}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Flex
       width="100%"
@@ -55,15 +70,7 @@ export function GraphField({ dataRange }: Props): ReactElement {
         <svg width="100%" height="100%">
           <AxisBottom scale={xScale} top={store.graphFieldSize.height / 2} />
           <AxisLeft scale={yScale} left={store.graphFieldSize.width / 2} />
-          <LinePath<Data>
-            curve={curveNatural}
-            data={dataRange}
-            x={(d) => xScale(getX(d)) ?? 0}
-            y={(d) => yScale(getY(d)) ?? 0}
-            stroke="#333333"
-            strokeWidth={2}
-            strokeOpacity={1}
-          />
+          {renderGraphField(graphVariant)}
         </svg>
       )}
     </Flex>

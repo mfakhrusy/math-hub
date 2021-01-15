@@ -6,7 +6,9 @@ type Props = {
   level: number;
 };
 
-export function MDRendererHeading(props: PropsWithChildren<Props>): ReactElement {
+export function MDRendererHeading(
+  props: PropsWithChildren<Props>
+): ReactElement {
   if (props.level === 1) {
     return <Heading size="xl">{props.children}</Heading>;
   }
