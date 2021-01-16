@@ -35,6 +35,98 @@ function InputField({ label, onConfirm, value }: InputFieldProps) {
   );
 }
 
+function InputFieldX() {
+  const store = useGraphStore();
+  const pixelPerScale =
+    store.graphFieldSize.width /
+    (store.axisRange.x.max - store.axisRange.x.min);
+  const yTotalScale = store.graphFieldSize.height / pixelPerScale;
+
+  return (
+    <Flex width="40%" flexDirection="column">
+      <InputField
+        label="min x"
+        value={store.axisRange.x.min.toString()}
+        onConfirm={(value) =>
+          store.setXAxisRange({
+            x: {
+              max: store.axisRange.x.max,
+              min: Number(value),
+            },
+            y: {
+              max: yTotalScale / 2,
+              min: (-1 * yTotalScale) / 2,
+            },
+          })
+        }
+      />
+      <Spacer height="15px" />
+      <InputField
+        label="max x"
+        value={store.axisRange.x.max.toString()}
+        onConfirm={(value) =>
+          store.setXAxisRange({
+            x: {
+              max: Number(value),
+              min: store.axisRange.x.min,
+            },
+            y: {
+              max: yTotalScale / 2,
+              min: (-1 * yTotalScale) / 2,
+            },
+          })
+        }
+      />
+    </Flex>
+  );
+}
+
+function InputFieldY() {
+  const store = useGraphStore();
+  const pixelPerScale =
+    store.graphFieldSize.height /
+    (store.axisRange.y.max - store.axisRange.y.min);
+  const xTotalScale = store.graphFieldSize.width / pixelPerScale;
+
+  return (
+    <Flex width="40%" flexDirection="column">
+      <InputField
+        label="min y"
+        value={store.axisRange.y.min.toString()}
+        onConfirm={(value) =>
+          store.setYAxisRange({
+            y: {
+              max: store.axisRange.y.max,
+              min: Number(value),
+            },
+            x: {
+              max: xTotalScale / 2,
+              min: (-1 * xTotalScale) / 2,
+            },
+          })
+        }
+      />
+      <Spacer height="15px" />
+      <InputField
+        label="max y"
+        value={store.axisRange.y.max.toString()}
+        onConfirm={(value) =>
+          store.setYAxisRange({
+            y: {
+              max: Number(value),
+              min: store.axisRange.y.min,
+            },
+            x: {
+              max: xTotalScale / 2,
+              min: (-1 * xTotalScale) / 2,
+            },
+          })
+        }
+      />
+    </Flex>
+  );
+}
+
 export function GraphRangeSetting(): ReactElement {
   const store = useGraphStore();
 
@@ -43,52 +135,7 @@ export function GraphRangeSetting(): ReactElement {
       <Heading size="md">Visualizer Range</Heading>
       <Spacer height="20px" />
       <Flex>
-        <Flex width="40%" flexDirection="column">
-          <InputField
-            label="min x"
-            value={store.axisRange.x.min.toString()}
-            onConfirm={(value) =>
-              store.setXAxisRange({
-                max: store.axisRange.x.max,
-                min: Number(value),
-              })
-            }
-          />
-          <Spacer height="15px" />
-          <InputField
-            label="max x"
-            value={store.axisRange.x.max.toString()}
-            onConfirm={(value) =>
-              store.setXAxisRange({
-                max: Number(value),
-                min: store.axisRange.x.min,
-              })
-            }
-          />
-        </Flex>
-        <Flex width="40%" flexDirection="column">
-          <InputField
-            label="min y"
-            value={store.axisRange.y.min.toString()}
-            onConfirm={(value) =>
-              store.setYAxisRange({
-                max: store.axisRange.y.max,
-                min: Number(value),
-              })
-            }
-          />
-          <Spacer height="15px" />
-          <InputField
-            label="max y"
-            value={store.axisRange.y.max.toString()}
-            onConfirm={(value) =>
-              store.setYAxisRange({
-                max: Number(value),
-                min: store.axisRange.y.min,
-              })
-            }
-          />
-        </Flex>
+        {store.isWidthBiggerThanHeight ? <InputFieldY /> : <InputFieldX />}
       </Flex>
     </Flex>
   );

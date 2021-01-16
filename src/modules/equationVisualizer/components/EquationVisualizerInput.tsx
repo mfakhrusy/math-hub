@@ -1,7 +1,10 @@
 import { Spacer } from "@/components/Spacer";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { ReactElement } from "react";
-import { defaultFunc, useEquationVisualizerStore } from "../equationVisualizerStore";
+import {
+  defaultFunc,
+  useEquationVisualizerStore,
+} from "../equationVisualizerStore";
 
 export function EquationVisualizerInput(): ReactElement {
   const store = useEquationVisualizerStore();

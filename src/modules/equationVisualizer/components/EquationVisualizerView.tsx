@@ -4,7 +4,7 @@ import { EquationVisualizerHeader } from "./EquationVisualizerHeader";
 import { useEquationVisualizerStore } from "../equationVisualizerStore";
 import { useGraphStore } from "@/modules/tools/graph/graphStore";
 import { useToast } from "@chakra-ui/react";
-import { ReactElement, useRef } from "react";
+import { ReactElement, useMemo, useRef } from "react";
 
 const calculateExpr = (func: string) => {
   return compile(func);
@@ -16,11 +16,10 @@ export function EquationVisualizerView(): ReactElement {
   const toast = useToast();
   const errorToastRef = useRef<string | number | undefined>();
 
-  const xDataRange = range(
-    graphStore.axisRange.x.min,
-    graphStore.axisRange.x.max + 1,
-    0.1
-  ).toArray() as Array<number>;
+  const xDataRange = useMemo(
+    () => range(graphStore.axisRange.x.min, graphStore.axisRange.x.max + 1, 0.5).toArray() as Array<number>,
+    []
+  );
 
   let yDataRange: Array<number> = [];
 

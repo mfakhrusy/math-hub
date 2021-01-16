@@ -6,8 +6,8 @@ type Size = {
 };
 
 const defaultGraphFieldSize: Size = {
-  width: 1000,
-  height: 1000,
+  width: 0,
+  height: 0,
 };
 
 type Range = {
@@ -22,12 +22,12 @@ type AxisRange = {
 
 const defaultAxisRange: AxisRange = {
   x: {
-    min: -40,
-    max: 40,
+    min: -10,
+    max: 10,
   },
   y: {
-    min: -40,
-    max: 40,
+    min: -10,
+    max: 10,
   },
 };
 
@@ -35,10 +35,12 @@ type EquationVisualizerState = {
   graphFieldSize: Size;
   setGraphFieldSize: (size: Size) => void;
   axisRange: AxisRange;
-  setXAxisRange: (xRange: Range) => void;
-  setYAxisRange: (yRange: Range) => void;
+  setXAxisRange: (range: AxisRange) => void;
+  setYAxisRange: (range: AxisRange) => void;
   isWidthBiggerThanHeight: boolean;
   setIsWidthBiggerThanHeight: (b: boolean) => void;
+  headerHeight: number;
+  setHeaderHeight: (height: number) => void;
 };
 
 export const useGraphStore = createHooks<EquationVisualizerState>((set) => ({
@@ -46,19 +48,26 @@ export const useGraphStore = createHooks<EquationVisualizerState>((set) => ({
   setGraphFieldSize: (size) =>
     set((state) => ({ ...state, graphFieldSize: size })),
   axisRange: defaultAxisRange,
-  setXAxisRange: (xRange: Range) =>
+  setXAxisRange: ({ x, y }) =>
     set((state) => ({
       ...state,
-      axisRange: { ...state.axisRange, x: xRange },
+      axisRange: { x, y },
     })),
-  setYAxisRange: (yRange: Range) =>
+  setYAxisRange: ({ x, y }) =>
     set((state) => ({
       ...state,
-      axisRange: { ...state.axisRange, y: yRange },
+      axisRange: { x, y },
     })),
   isWidthBiggerThanHeight: true,
-  setIsWidthBiggerThanHeight: (b: boolean) => set((state) => ({
-    ...state,
-    isWidthBiggerThanHeight: b
-  }))
+  setIsWidthBiggerThanHeight: (bool: boolean) =>
+    set((state) => ({
+      ...state,
+      isWidthBiggerThanHeight: bool,
+    })),
+  headerHeight: 0,
+  setHeaderHeight: (height: number) =>
+    set((state) => ({
+      ...state,
+      headerHeight: height,
+    })),
 }));
