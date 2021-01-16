@@ -1,4 +1,4 @@
-import { Divider, Flex, useDisclosure } from "@chakra-ui/react";
+import { Flex, useDisclosure } from "@chakra-ui/react";
 import { PropsWithChildren, ReactElement } from "react";
 import { GraphVariant, DataRange } from "../graphTools";
 import { FloatingGraphConfig } from "./FloatingGraphConfig";
@@ -19,10 +19,7 @@ export function GraphToolsLayout({
 
   return (
     <Flex flexDirection="column" backgroundColor="#EFEFEF" height="100vh">
-      <Flex>
-        {children}
-        <Divider orientation="vertical" backgroundColor="#AEAEAE" width="2px" />
-      </Flex>
+      {children}
       <FloatingGraphConfig onClick={onOpen} />
       <GraphSettingModal onClose={onClose} isOpen={isOpen} />
       <GraphField dataRange={dataRange} graphVariant={graphVariant} />

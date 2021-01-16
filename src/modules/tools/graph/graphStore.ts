@@ -37,6 +37,8 @@ type EquationVisualizerState = {
   axisRange: AxisRange;
   setXAxisRange: (xRange: Range) => void;
   setYAxisRange: (yRange: Range) => void;
+  isWidthBiggerThanHeight: boolean;
+  setIsWidthBiggerThanHeight: (b: boolean) => void;
 };
 
 export const useGraphStore = createHooks<EquationVisualizerState>((set) => ({
@@ -54,4 +56,9 @@ export const useGraphStore = createHooks<EquationVisualizerState>((set) => ({
       ...state,
       axisRange: { ...state.axisRange, y: yRange },
     })),
+  isWidthBiggerThanHeight: true,
+  setIsWidthBiggerThanHeight: (b: boolean) => set((state) => ({
+    ...state,
+    isWidthBiggerThanHeight: b
+  }))
 }));

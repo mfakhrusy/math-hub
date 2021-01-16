@@ -18,23 +18,50 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
 
   useEffect(() => {
     if (graphFieldRef?.current?.clientHeight) {
+      const width = graphFieldRef.current.clientWidth;
+      const height = graphFieldRef.current.clientHeight;
+      const isWidthBiggerThanHeight = width > height;
+
+      store.setIsWidthBiggerThanHeight(isWidthBiggerThanHeight);
+
       store.setGraphFieldSize({
-        width: graphFieldRef?.current?.clientWidth,
-        height: graphFieldRef?.current?.clientHeight,
+        width,
+        height,
       });
+
+      if (isWidthBiggerThanHeight) {
+        const pixelPerScale = height / (store.axisRange.y.max - store.axisRange.y.min);
+
+        const xTotalScale = width / pixelPerScale;
+
+        store.setXAxisRange({
+          max: xTotalScale / 2,
+          min: -1 * xTotalScale / 2,
+        })
+      } else {
+        const pixelPerScale = width / (store.axisRange.x.max - store.axisRange.x.min);
+
+        const yTotalScale = height / pixelPerScale;
+
+        store.setYAxisRange({
+          max: yTotalScale / 2,
+          min: -1 * yTotalScale / 2
+        })
+      }
     }
   }, [graphFieldRef?.current?.clientHeight]);
 
   const xScale = scaleLinear<number>({
     domain: [store.axisRange.x.min, store.axisRange.x.max],
+    range: [0, store.graphFieldSize.width] ,
+    nice: true,
   });
 
   const yScale = scaleLinear<number>({
     domain: [store.axisRange.y.min, store.axisRange.y.max],
+    range: [store.graphFieldSize.height, 0],
+    nice: true,
   });
-
-  xScale.range([0, store.graphFieldSize.width]);
-  yScale.range([store.graphFieldSize.height, 0]);
 
   const renderGraphField = (graphVariant: GraphVariant) => {
     switch (graphVariant) {
