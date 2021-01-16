@@ -1,6 +1,6 @@
 import createHooks from "zustand";
 
-const defaultFunc = "x^2 - 10";
+export const defaultFunc = "0.5x^2 * sin(x/5)";
 
 type EquationVisualizerState = {
   inputFunc: string;

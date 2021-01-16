@@ -1,7 +1,7 @@
 import { Spacer } from "@/components/Spacer";
 import { Button, Flex, Input, Text } from "@chakra-ui/react";
 import { ReactElement } from "react";
-import { useEquationVisualizerStore } from "../equationVisualizerStore";
+import { defaultFunc, useEquationVisualizerStore } from "../equationVisualizerStore";
 
 export function EquationVisualizerInput(): ReactElement {
   const store = useEquationVisualizerStore();
@@ -10,7 +10,7 @@ export function EquationVisualizerInput(): ReactElement {
     <Flex alignItems="center">
       <Flex flexDirection="column">
         <Text>Enter math expression:</Text>
-        <Text as="small">(example: x^2 - 10)</Text>
+        <Text as="small">{`(example: ${defaultFunc})`}</Text>
       </Flex>
       <Spacer width="20px" />
       <Input
