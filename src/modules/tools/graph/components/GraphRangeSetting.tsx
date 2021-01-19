@@ -48,7 +48,7 @@ function InputFieldX() {
         label="min x"
         value={store.axisRange.x.min.toString()}
         onConfirm={(value) =>
-          store.setXAxisRange({
+          store.setAxisRange({
             x: {
               max: store.axisRange.x.max,
               min: Number(value),
@@ -65,7 +65,7 @@ function InputFieldX() {
         label="max x"
         value={store.axisRange.x.max.toString()}
         onConfirm={(value) =>
-          store.setXAxisRange({
+          store.setAxisRange({
             x: {
               max: Number(value),
               min: store.axisRange.x.min,
@@ -94,7 +94,7 @@ function InputFieldY() {
         label="min y"
         value={store.axisRange.y.min.toString()}
         onConfirm={(value) =>
-          store.setYAxisRange({
+          store.setAxisRange({
             y: {
               max: store.axisRange.y.max,
               min: Number(value),
@@ -111,7 +111,7 @@ function InputFieldY() {
         label="max y"
         value={store.axisRange.y.max.toString()}
         onConfirm={(value) =>
-          store.setYAxisRange({
+          store.setAxisRange({
             y: {
               max: Number(value),
               min: store.axisRange.y.min,

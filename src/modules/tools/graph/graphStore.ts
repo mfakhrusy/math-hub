@@ -1,3 +1,4 @@
+import { TransformMatrix } from "@visx/zoom/lib/types";
 import createHooks from "zustand";
 
 type Size = {
@@ -5,7 +6,7 @@ type Size = {
   height: number;
 };
 
-const defaultGraphFieldSize: Size = {
+const initialGraphFieldSize: Size = {
   width: 0,
   height: 0,
 };
@@ -20,7 +21,7 @@ type AxisRange = {
   y: Range;
 };
 
-const defaultAxisRange: AxisRange = {
+const initialAxisRange: AxisRange = {
   x: {
     min: -10,
     max: 10,
@@ -31,29 +32,34 @@ const defaultAxisRange: AxisRange = {
   },
 };
 
+export const initialTransformMatrix: TransformMatrix = {
+  scaleX: 1,
+  scaleY: 1,
+  translateX: 0,
+  translateY: 0,
+  skewX: 0,
+  skewY: 0,
+};
+
 type EquationVisualizerState = {
   graphFieldSize: Size;
   setGraphFieldSize: (size: Size) => void;
   axisRange: AxisRange;
-  setXAxisRange: (range: AxisRange) => void;
-  setYAxisRange: (range: AxisRange) => void;
+  setAxisRange: (range: AxisRange) => void;
   isWidthBiggerThanHeight: boolean;
   setIsWidthBiggerThanHeight: (b: boolean) => void;
   headerHeight: number;
   setHeaderHeight: (height: number) => void;
+  transformMatrix: TransformMatrix;
+  setTransformMatrix: (matrix: TransformMatrix) => void;
 };
 
 export const useGraphStore = createHooks<EquationVisualizerState>((set) => ({
-  graphFieldSize: defaultGraphFieldSize,
+  graphFieldSize: initialGraphFieldSize,
   setGraphFieldSize: (size) =>
     set((state) => ({ ...state, graphFieldSize: size })),
-  axisRange: defaultAxisRange,
-  setXAxisRange: ({ x, y }) =>
-    set((state) => ({
-      ...state,
-      axisRange: { x, y },
-    })),
-  setYAxisRange: ({ x, y }) =>
+  axisRange: initialAxisRange,
+  setAxisRange: ({ x, y }) =>
     set((state) => ({
       ...state,
       axisRange: { x, y },
@@ -70,4 +76,9 @@ export const useGraphStore = createHooks<EquationVisualizerState>((set) => ({
       ...state,
       headerHeight: height,
     })),
+  transformMatrix: initialTransformMatrix,
+  setTransformMatrix: (matrix: TransformMatrix) => set((state) => ({
+    ...state,
+    transformMatrix: matrix,
+  }))
 }));

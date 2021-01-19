@@ -1,14 +1,14 @@
-import { Flex } from "@chakra-ui/react";
-import { AxisBottom, AxisLeft } from "@visx/axis";
+import { Flex, transform } from "@chakra-ui/react";
+import { AxisBottom, AxisLeft, AxisTop } from "@visx/axis";
 import { Zoom } from "@visx/zoom";
 import { scaleLinear } from "@visx/scale";
-import { ReactElement, useEffect, useRef } from "react";
-import { useGraphStore } from "../graphStore";
+import { ReactElement, RefObject, useEffect, useRef, useState } from "react";
+import { useGraphStore, initialTransformMatrix } from "../graphStore";
 import { DataRange, GraphVariant } from "../graphTools";
 import { GraphFieldLine } from "./GraphFieldLine";
 import { GraphFieldScatter } from "./GraphFieldLineScatter";
-import { max } from "mathjs";
 import { ScaleLinear } from "d3-scale";
+import { round } from "mathjs";
 
 const renderGraphField = (
   graphVariant: GraphVariant,
@@ -43,28 +43,37 @@ const renderGraphField = (
 type Props = {
   dataRange: DataRange;
   graphVariant: GraphVariant;
+  zoomRef?: RefObject<Zoom> | null;
 };
 
-const initialTransform = {
-  scaleX: 1,
-  scaleY: 1,
-  translateX: 0,
-  translateY: 0,
-  skewX: 0,
-  skewY: 0,
-};
-
-export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
+export function GraphField({
+  dataRange,
+  graphVariant,
+  zoomRef,
+}: Props): ReactElement {
   const graphFieldRef = useRef<HTMLDivElement>(null);
   const store = useGraphStore();
 
+  const yPixelPerScale = round(
+    (graphFieldRef.current?.clientHeight ?? 1) /
+      (store.axisRange.y.max - store.axisRange.y.min),
+    5
+  );
+
+  const xPixelPerScale = round(
+    (graphFieldRef.current?.clientWidth ?? 1) /
+      (store.axisRange.x.max - store.axisRange.x.min),
+    5
+  );
+
+  // console.log("tes", yPixelPerScale, graphFieldRef.current?.clientHeight ?? 11, store.axisRange.y.max, store.axisRange.y.min, store.axisRange.y.max - store.axisRange.y.min);
+
   useEffect(() => {
+    console.log("yahahah");
     if (graphFieldRef?.current?.clientHeight) {
       const width = graphFieldRef.current.clientWidth;
       const height = graphFieldRef.current.clientHeight;
       const isWidthBiggerThanHeight = width > height;
-
-      console.log(graphFieldRef.current.offsetTop);
 
       store.setIsWidthBiggerThanHeight(isWidthBiggerThanHeight);
 
@@ -74,12 +83,9 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
       });
 
       if (isWidthBiggerThanHeight) {
-        const pixelPerScale =
-          height / (store.axisRange.y.max - store.axisRange.y.min);
+        const xTotalScale = width / yPixelPerScale;
 
-        const xTotalScale = width / pixelPerScale;
-
-        store.setXAxisRange({
+        store.setAxisRange({
           x: {
             max: xTotalScale / 2,
             min: (-1 * xTotalScale) / 2,
@@ -87,12 +93,9 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
           y: store.axisRange.y,
         });
       } else {
-        const pixelPerScale =
-          width / (store.axisRange.x.max - store.axisRange.x.min);
+        const yTotalScale = height / xPixelPerScale;
 
-        const yTotalScale = height / pixelPerScale;
-
-        store.setYAxisRange({
+        store.setAxisRange({
           y: {
             max: yTotalScale / 2,
             min: (-1 * yTotalScale) / 2,
@@ -103,62 +106,130 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
     }
   }, [graphFieldRef?.current?.clientWidth]);
 
+  // const xScaleMin = useRef(store.axisRange.x.min);
+  // const xScaleMax = useRef(store.axisRange.x.max);
+
+  // useEffect(() => {
+  //   console.log("berubah x");
+  // }, [xScaleMin, xScaleMax]);
+
   const xScale = scaleLinear<number>({
-    domain: [store.axisRange.x.min, store.axisRange.x.max],
+    // domain: [xScaleMin.current, xScaleMax.current],
     range: [0, store.graphFieldSize.width],
   });
 
+  // const yScaleMin = useRef(store.axisRange.y.min);
+  // const yScaleMax = useRef(store.axisRange.y.max);
+
+  // console.log(yScaleMin.current)
+
   const yScale = scaleLinear<number>({
-    domain: [store.axisRange.y.min, store.axisRange.y.max],
+    // domain: [yScaleMin.current, yScaleMax.current],
     range: [store.graphFieldSize.height, 0],
   });
+
+  // const [transformMatrix, setTransformMatrix] = useState<
+  //   typeof initialTransform
+  // >(initialTransform);
+
+  // console.log("ghaha")
+  // useEffect(() => {
+  //   // const yScaleMin =
+  //   //   store.axisRange.y.min / transformMatrix.scaleY +
+  //   //   (transformMatrix.translateY / transformMatrix.scaleY) / yPixelPerScale;
+  //   const yScaleMin =
+  //     store.axisRange.y.min + transformMatrix.translateY / yPixelPerScale;
+
+  //   // console.log(transformMatrix.translateY, store.axisRange.y.min, yScaleMin, yPixelPerScale, transformMatrix);
+
+  //   const yScaleMax =
+  //     store.axisRange.y.max / transformMatrix.scaleY +
+  //     transformMatrix.translateY / transformMatrix.scaleY / yPixelPerScale;
+
+  //   const xScaleMin =
+  //     store.axisRange.x.min / transformMatrix.scaleX -
+  //     transformMatrix.translateX / transformMatrix.scaleX / xPixelPerScale;
+
+  //   const xScaleMax =
+  //     store.axisRange.x.max / transformMatrix.scaleX -
+  //     transformMatrix.translateX / transformMatrix.scaleX / xPixelPerScale;
+
+  //   console.log(xScaleMin, xScaleMax, transformMatrix);
+
+  //       // yScale.domain([yScaleMin, yScaleMax]);
+  //       // xScale.domain([xScaleMin, xScaleMax]);
+
+  //   store.setAxisRange({
+  //     x: {
+  //       max: xScaleMax,
+  //       min: xScaleMin,
+  //     },
+  //     y: {
+  //       max: yScaleMax,
+  //       min: yScaleMin,
+  //     },
+  //   });
+  // }, [transformMatrix.translateX, transformMatrix.translateY]);
 
   if (store.headerHeight === 0) {
     return <div />;
   }
   return (
     <Zoom
+      ref={zoomRef}
       width={store.graphFieldSize.width}
       height={store.graphFieldSize.height}
       scaleXMin={0.1}
       scaleXMax={10}
       scaleYMin={0.1}
       scaleYMax={10}
-      transformMatrix={initialTransform}
+      transformMatrix={initialTransformMatrix}
     >
       {(zoom) => {
-        const yPixelPerScale =
-          (graphFieldRef.current?.clientHeight ?? 0) /
-          (store.axisRange.y.max - store.axisRange.y.min);
-
-        const xPixelPerScale =
-          (graphFieldRef.current?.clientWidth ?? 0) /
-          (store.axisRange.x.max - store.axisRange.x.min);
-
+        // store.setTransformMatrix(zoom.transformMatrix);
+        // setTransformMatrix(zoom.transformMatrix);
+        // const yScaleMin =
+        //   (store.axisRange.y.min / zoom.transformMatrix.scaleY +
+        //     yScale.invert((yScale(0) - zoom.transformMatrix.translateY)) / zoom.transformMatrix.scaleY) 
         const yScaleMin =
           store.axisRange.y.min / zoom.transformMatrix.scaleY +
           zoom.transformMatrix.translateY /
             zoom.transformMatrix.scaleY /
             yPixelPerScale;
+        // console.log(yScale.invert(850), yScale(0), zoom.transformMatrix.translateY,/*yScale.invert((yScale(0) - zoom.transformMatrix.translateY) / zoom.transformMatrix.scaleY), yScaleMin*/)
 
+        // const yScaleMax =
+        //   (store.axisRange.y.max / zoom.transformMatrix.scaleY +
+        //     yScale.invert((yScale(0) - zoom.transformMatrix.translateY)) / zoom.transformMatrix.scaleY)
         const yScaleMax =
           store.axisRange.y.max / zoom.transformMatrix.scaleY +
           zoom.transformMatrix.translateY /
             zoom.transformMatrix.scaleY /
             yPixelPerScale;
+        // console.log(
+        //   zoom.transformMatrix.scaleX,
+        //   zoom.transformMatrix.scaleY,
+        //   yScale(0),
+        //   zoom.transformMatrix.translateY
+        // );
 
         yScale.domain([yScaleMin, yScaleMax]);
+        // yScale.domain([store.axisRange.y.min, store.axisRange.y.max])
 
-        // yScale.range([store.graphFieldSize.height + zoom.transformMatrix.translateY, 0])
-
-        // yScale.invert
-
+        // const xScaleMin =
+        //   (store.axisRange.x.min +
+        //     xScale.invert(xScale(0) - zoom.transformMatrix.translateX)) /
+        //   zoom.transformMatrix.scaleX;
         const xScaleMin =
           store.axisRange.x.min / zoom.transformMatrix.scaleX -
           zoom.transformMatrix.translateX /
             zoom.transformMatrix.scaleX /
             xPixelPerScale;
 
+        // const xScaleMax =
+        //   (store.axisRange.x.max +
+        //     xScale.invert(xScale(0) - zoom.transformMatrix.translateX)) /
+        //   zoom.transformMatrix.scaleX;
         const xScaleMax =
           store.axisRange.x.max / zoom.transformMatrix.scaleX -
           zoom.transformMatrix.translateX /
@@ -166,36 +237,23 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
             xPixelPerScale;
 
         xScale.domain([xScaleMin, xScaleMax]);
+        // xScale.domain([store.axisRange.x.min, store.axisRange.x.max])
 
-        // console.log(
-        //   "tes",
-        //   zoom.transformMatrix.translateY,
-        //   zoom.transformMatrix.scaleY,
-        //   yScaleMin,
-        //   yScaleMax,
-        // );
-        // yScale.domain([
-        //   yScale.invert(
-        //     (yScale(0) - zoom.transformMatrix.translateY) /
-        //       zoom.transformMatrix.scaleY
-        //   ) + store.axisRange.y.min,
-        //   yScale.invert(
-        //     (yScale(max(dataRange.map(({ y }) => y))) -
-        //       zoom.transformMatrix.translateY) /
-        //       zoom.transformMatrix.scaleY
-        //   ) + store.axisRange.y.max,
-        // ]);
-        // xScale.domain([
-        //   xScale.invert(
-        //     (xScale(0) - zoom.transformMatrix.translateX) /
-        //       zoom.transformMatrix.scaleX
-        //   ) + store.axisRange.x.min,
-        //   xScale.invert(
-        //     (xScale(max(dataRange.map(({ x }) => x))) -
-        //       zoom.transformMatrix.translateX) /
-        //       zoom.transformMatrix.scaleX
-        //   ) + store.axisRange.x.max,
-        // ]);
+        // if (xScaleMin.current !== store.axisRange.x.min)  {
+        //   console.log("yes", xScaleMin.current, store.axisRange.x.min)
+
+        // store.setAxisRange({
+        //   x: {
+        //     max: xScaleMax.current,
+        //     min: xScaleMin.current
+        //   },
+        //   y: {
+        //     max: yScaleMax,
+        //     min: yScaleMin
+        //   }
+        // })
+        // }
+
         return (
           <Flex
             width="100%"
@@ -210,6 +268,7 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
               >
                 <AxisBottom
                   scale={xScale}
+                  // top={store.graphFieldSize.height / 2}
                   top={
                     store.graphFieldSize.height / 2 +
                     zoom.transformMatrix.translateY
@@ -217,6 +276,7 @@ export function GraphField({ dataRange, graphVariant }: Props): ReactElement {
                 />
                 <AxisLeft
                   scale={yScale}
+                  // left={store.graphFieldSize.width / 2}
                   left={
                     store.graphFieldSize.width / 2 +
                     zoom.transformMatrix.translateX
