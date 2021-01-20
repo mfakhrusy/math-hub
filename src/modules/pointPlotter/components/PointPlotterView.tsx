@@ -2,8 +2,14 @@ import { range } from "mathjs";
 import { DataRange, GraphToolsLayout } from "@/modules/tools/graph";
 import { useGraphStore } from "@/modules/tools/graph/graphStore";
 import { PointPlotterHeader } from "./PointPlotterHeader";
+import { withZoom } from "@/modules/tools/graph/lib/withZoom";
+import { ZoomType } from "@/modules/tools/graph/graphTools";
 
-export function PointPlotterView(): JSX.Element {
+type Props = {
+  zoom: ZoomType;
+};
+
+function PointPlotterViewWrapped({ zoom }: Props): JSX.Element {
   const graphStore = useGraphStore();
 
   const xDataRange = range(
@@ -20,8 +26,10 @@ export function PointPlotterView(): JSX.Element {
   }));
 
   return (
-    <GraphToolsLayout dataRange={dataRange} graphVariant="Scatter">
+    <GraphToolsLayout dataRange={dataRange} graphVariant="Scatter" zoom={zoom}>
       <PointPlotterHeader />
     </GraphToolsLayout>
   );
 }
+
+export const PointPlotterView = withZoom(PointPlotterViewWrapped);

@@ -1,21 +1,22 @@
 import { Flex, useDisclosure } from "@chakra-ui/react";
-import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
+import { ReactElement, ReactNode, useEffect, useRef } from "react";
 import { useGraphStore } from "../graphStore";
-import { GraphVariant, DataRange } from "../graphTools";
-import { FloatingGraphConfig } from "./FloatingGraphConfig";
+import { GraphVariant, DataRange, ZoomType } from "../graphTools";
 import { GraphField } from "./GraphField";
-import { GraphSettingModal } from "./GraphSettingModal";
 
 type Props = {
   dataRange: DataRange;
   graphVariant?: GraphVariant;
+  children: ReactNode;
+  zoom: ZoomType;
 };
 
 export function GraphToolsLayout({
   children,
   dataRange,
   graphVariant = "Line",
-}: PropsWithChildren<Props>): ReactElement {
+  zoom,
+}: Props): ReactElement {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const store = useGraphStore();
   const headerRef = useRef<HTMLDivElement>(null);
@@ -28,10 +29,16 @@ export function GraphToolsLayout({
 
   return (
     <Flex flexDirection="column" backgroundColor="#EFEFEF" height="100vh">
-      <Flex ref={headerRef}>{children}</Flex>
-      {/* <FloatingGraphConfig onClick={onOpen} />
-      <GraphSettingModal onClose={onClose} isOpen={isOpen} /> */}
-      <GraphField dataRange={dataRange} graphVariant={graphVariant} />
+      <>
+        <Flex ref={headerRef}>{children}</Flex>
+        {/* <FloatingGraphConfig onClick={onOpen} />
+          <GraphSettingModal onClose={onClose} isOpen={isOpen} /> */}
+        <GraphField
+          dataRange={dataRange}
+          graphVariant={graphVariant}
+          zoom={zoom}
+        />
+      </>
     </Flex>
   );
 }
