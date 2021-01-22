@@ -1,6 +1,6 @@
 import createHooks from "zustand";
 
-export const defaultFunc = "sin(x)/0.5x";
+export const defaultFunc = "sin(x)";
 
 type EquationVisualizerState = {
   inputFunc: string;
