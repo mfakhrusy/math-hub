@@ -26,17 +26,26 @@ function EquationVisualizerViewWrapped({ zoom }: Props): ReactElement {
 
   const xMin = (graphStore.axisRange.x.min + zoom.transformMatrix.translateX / xPixelPerScale) / zoom.transformMatrix.scaleX;
   const xMax = (graphStore.axisRange.x.max + zoom.transformMatrix.translateX / xPixelPerScale) / zoom.transformMatrix.scaleX;
-
-  console.log(xPixelPerScale, zoom.transformMatrix.translateX, xMin, xMax);
+  const calcStep = (scale: number) => {
+    if (scale > 10) {
+      return 0.1
+    } else if (scale > 5) {
+      return 0.3
+    } else if (scale > 1) {
+      return 0.5;
+    } else if (scale > 0.5) {
+      return 1;
+    } else {
+      return 1.5
+    }
+  }
 
   const xDataRange = useMemo(
     () =>
       range(
-        // graphStore.axisRange.x.min,
-        // graphStore.axisRange.x.max + 1,
         xMin,
         xMax + 1,
-        0.5
+        calcStep(zoom.transformMatrix.scaleX)
       ).toArray() as Array<number>,
     [xMin, xMax]
   );

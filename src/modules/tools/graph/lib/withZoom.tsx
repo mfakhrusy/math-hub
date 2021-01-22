@@ -23,9 +23,9 @@ export function withZoom<T = Record<string, unknown>>(
         width={store.graphFieldSize.width}
         height={store.graphFieldSize.height}
         scaleXMin={0.1}
-        scaleXMax={10}
+        scaleXMax={20}
         scaleYMin={0.1}
-        scaleYMax={10}
+        scaleYMax={20}
         transformMatrix={initialTransform}
       >
         {(zoom) => <Component {...props} zoom={zoom} />}

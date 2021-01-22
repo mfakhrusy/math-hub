@@ -7,6 +7,7 @@ import { DataRange, GraphVariant, ZoomType } from "../graphTools";
 import { GraphFieldLine } from "./GraphFieldLine";
 import { GraphFieldScatter } from "./GraphFieldLineScatter";
 import { ScaleLinear } from "d3-scale";
+import { ScaleSVG } from "@visx/responsive";
 
 const renderGraphField = (
   graphVariant: GraphVariant,
@@ -57,8 +58,6 @@ export function GraphField({
       const width = graphFieldRef.current.clientWidth;
       const height = graphFieldRef.current.clientHeight;
       const isWidthBiggerThanHeight = width > height;
-
-      console.log(graphFieldRef.current.offsetTop);
 
       store.setIsWidthBiggerThanHeight(isWidthBiggerThanHeight);
 
@@ -155,6 +154,10 @@ export function GraphField({
       ref={graphFieldRef}
     >
       {graphFieldRef.current && (
+        <ScaleSVG
+          width={store.graphFieldSize.width}
+          height={store.graphFieldSize.height}
+        >
         <svg
           width={store.graphFieldSize.width}
           height={store.graphFieldSize.height}
@@ -196,6 +199,7 @@ export function GraphField({
             }}
           />
         </svg>
+        </ScaleSVG>
       )}
     </Flex>
   );

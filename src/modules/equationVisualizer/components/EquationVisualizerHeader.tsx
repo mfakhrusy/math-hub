@@ -5,7 +5,7 @@ import { EquationVisualizerInput } from "./EquationVisualizerInput";
 
 export function EquationVisualizerHeader(): ReactElement {
   return (
-    <Flex flexDirection="column" padding="20px">
+    <Flex flexDirection="column" padding={{base: '10px', sm: '20px'}}>
       <Heading size="md">Math Equation Visualizer</Heading>
       <Spacer height="20px" />
       <EquationVisualizerInput />

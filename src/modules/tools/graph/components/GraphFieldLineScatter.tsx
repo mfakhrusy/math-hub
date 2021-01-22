@@ -15,7 +15,6 @@ export function GraphFieldScatter({
   xScale,
   yScale,
 }: Props): ReactElement {
-  console.log(dataRange);
   return (
     <Group>
       {dataRange.map(({ x, y }, i) => (
