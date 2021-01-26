@@ -158,47 +158,48 @@ export function GraphField({
           width={store.graphFieldSize.width}
           height={store.graphFieldSize.height}
         >
-        <svg
-          width={store.graphFieldSize.width}
-          height={store.graphFieldSize.height}
-        >
-          <AxisBottom
-            scale={xScale}
-            top={
-              store.graphFieldSize.height / 2 + zoom.transformMatrix.translateY
-            }
-          />
-          <AxisLeft
-            scale={yScale}
-            left={
-              store.graphFieldSize.width / 2 + zoom.transformMatrix.translateX
-            }
-          />
-          {renderGraphField(
-            graphVariant,
-            zoom.toString(),
-            xScale,
-            yScale,
-            dataRange
-          )}
-          <rect
-            fill="transparent"
+          <svg
             width={store.graphFieldSize.width}
             height={store.graphFieldSize.height}
-            rx={14}
-            onTouchStart={zoom.dragStart}
-            onTouchMove={zoom.dragMove}
-            onTouchEnd={zoom.dragEnd}
-            onMouseDown={zoom.dragStart}
-            onMouseMove={zoom.dragMove}
-            onMouseUp={zoom.dragEnd}
-            onMouseLeave={() => {
-              if (zoom.isDragging) {
-                zoom.dragEnd();
+          >
+            <AxisBottom
+              scale={xScale}
+              top={
+                store.graphFieldSize.height / 2 +
+                zoom.transformMatrix.translateY
               }
-            }}
-          />
-        </svg>
+            />
+            <AxisLeft
+              scale={yScale}
+              left={
+                store.graphFieldSize.width / 2 + zoom.transformMatrix.translateX
+              }
+            />
+            {renderGraphField(
+              graphVariant,
+              zoom.toString(),
+              xScale,
+              yScale,
+              dataRange
+            )}
+            <rect
+              fill="transparent"
+              width={store.graphFieldSize.width}
+              height={store.graphFieldSize.height}
+              rx={14}
+              onTouchStart={zoom.dragStart}
+              onTouchMove={zoom.dragMove}
+              onTouchEnd={zoom.dragEnd}
+              onMouseDown={zoom.dragStart}
+              onMouseMove={zoom.dragMove}
+              onMouseUp={zoom.dragEnd}
+              onMouseLeave={() => {
+                if (zoom.isDragging) {
+                  zoom.dragEnd();
+                }
+              }}
+            />
+          </svg>
         </ScaleSVG>
       )}
     </Flex>

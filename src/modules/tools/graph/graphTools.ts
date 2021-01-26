@@ -15,4 +15,3 @@ export interface ZoomType extends ProvidedZoom {
   transformMatrix: TransformMatrix;
   isDragging: boolean;
 }
-
