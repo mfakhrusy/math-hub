@@ -125,8 +125,6 @@ function EquationVisualizerViewWrapped({ zoom }: Props): ReactElement {
       y: yDataRange[i],
     }));
 
-    console.log(calcStep(scaleX));
-
     return (
       <GraphToolsLayout dataRange={dataRange} zoom={zoom}>
         <EquationVisualizerHeader />
